@@ -1,4 +1,4 @@
-import type { ICustomUserStatus, UserStatus } from '@rocket.chat/core-typings';
+import type { ICustomUserStatus } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
@@ -19,7 +19,7 @@ Meteor.startup(() => {
 				const newUserStatus = {
 					name: customStatus.name,
 					id: customStatus._id,
-					statusType: customStatus.statusType as UserStatus,
+					statusType: customStatus.statusType,
 					localizeName: false,
 				};
 

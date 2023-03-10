@@ -1,3 +1,4 @@
+import type { ICustomSound } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 
 import { CustomSounds } from '../../app/custom-sounds/client/lib/CustomSounds';
@@ -6,6 +7,6 @@ import { CachedCollectionManager } from '../../app/ui-cached-collection/client';
 
 Meteor.startup(() =>
 	CachedCollectionManager.onLogin(() =>
-		Notifications.onAll('deleteCustomSound', (data: { soundData: any }) => CustomSounds.remove(data.soundData)),
+		Notifications.onAll('deleteCustomSound', (data: { soundData: ICustomSound }) => CustomSounds.remove(data.soundData)),
 	),
 );

@@ -95,6 +95,9 @@ class CustomSoundsClass {
 		return list.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
 	}
 
+	/**
+	 * @return {HTMLAudioElement | undefined}
+	 */
 	play = (sound, { volume = 1, loop = false } = {}) => {
 		const audio = document.querySelector(`#${getCustomSoundId(sound)}`);
 		if (!audio || !audio.play) {

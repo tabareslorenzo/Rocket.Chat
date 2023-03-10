@@ -47,7 +47,7 @@ Meteor.startup(() => {
 		}
 
 		if (getUserPreference(user, 'enableAutoAway')) {
-			const idleTimeLimit = (getUserPreference(user, 'idleTimeLimit') as number | null | undefined) || 300;
+			const idleTimeLimit = getUserPreference(user, 'idleTimeLimit', 300);
 			UserPresence.awayTime = idleTimeLimit * 1000;
 		} else {
 			delete UserPresence.awayTime;
@@ -93,7 +93,7 @@ Meteor.startup(() => {
 });
 Meteor.startup(() => {
 	Tracker.autorun(() => {
-		const code = settings.get('Message_Code_highlight') as string | undefined;
+		const code = settings.get<string>('Message_Code_highlight');
 		code?.split(',').forEach((language: string) => {
 			language.trim() && register(language.trim());
 		});

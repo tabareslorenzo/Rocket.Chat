@@ -17,7 +17,7 @@ Meteor.methods({
 			});
 		}
 
-		if (!user.services || !user.services.totp || !user.services.totp.tempSecret) {
+		if (!user.services?.totp?.tempSecret) {
 			throw new Meteor.Error('invalid-totp');
 		}
 

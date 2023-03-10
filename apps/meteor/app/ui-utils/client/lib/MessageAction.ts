@@ -1,4 +1,4 @@
-import type { ComponentProps, ContextType } from 'react';
+import type { ComponentProps, ContextType, UIEvent } from 'react';
 import mem from 'mem';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -57,7 +57,7 @@ export type MessageActionConfig = {
 	group?: MessageActionGroup | MessageActionGroup[];
 	context?: MessageActionContext[];
 	action: (
-		e: Pick<Event, 'preventDefault' | 'stopPropagation' | 'currentTarget'>,
+		e: UIEvent<Element>,
 		{
 			message,
 			tabbar,

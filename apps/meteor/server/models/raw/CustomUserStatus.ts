@@ -1,4 +1,4 @@
-import type { ICustomUserStatus, RocketChatRecordDeleted } from '@rocket.chat/core-typings';
+import type { ICustomUserStatus, RocketChatRecordDeleted, UserStatus } from '@rocket.chat/core-typings';
 import type { ICustomUserStatusModel } from '@rocket.chat/model-typings';
 import type { Collection, FindCursor, Db, FindOptions, IndexDescription, InsertOneResult, UpdateResult, WithId } from 'mongodb';
 
@@ -50,7 +50,7 @@ export class CustomUserStatusRaw extends BaseRaw<ICustomUserStatus> implements I
 		return this.updateOne({ _id }, update);
 	}
 
-	setStatusType(_id: string, statusType: string): Promise<UpdateResult> {
+	setStatusType(_id: string, statusType: UserStatus): Promise<UpdateResult> {
 		const update = {
 			$set: {
 				statusType,

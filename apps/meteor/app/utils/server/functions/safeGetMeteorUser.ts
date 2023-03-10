@@ -1,3 +1,4 @@
+import type { IUser } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 
 const invalidEnvironmentErrorMessage = 'Meteor.userId can only be invoked in method calls or publications.';
@@ -14,7 +15,7 @@ const invalidEnvironmentErrorMessage = 'Meteor.userId can only be invoked in met
  *
  * @returns The current user in the Meteor session, or null if not available
  */
-export function safeGetMeteorUser(): Meteor.User | null {
+export function safeGetMeteorUser(): IUser | null {
 	try {
 		return Meteor.user();
 	} catch (error: any) {

@@ -6,7 +6,7 @@ import { handlePayloadUserInteraction } from '../../app/ui-message/client/Action
 
 Meteor.startup(() => {
 	CachedCollectionManager.onLogin(() => {
-		Notifications.onUser('uiInteraction', ({ type, ...data }: { type: any; triggerId: any }) => {
+		Notifications.onUser('uiInteraction', ({ type, ...data }: { type: string; triggerId: string; [x: string]: unknown }) => {
 			handlePayloadUserInteraction(type, data);
 		});
 	});

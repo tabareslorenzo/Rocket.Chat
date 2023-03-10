@@ -1,3 +1,4 @@
+import type { ITranslatedMessage } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
@@ -20,8 +21,7 @@ Meteor.startup(() => {
 				icon: 'language',
 				label: 'Translate',
 				context: ['message', 'message-mobile', 'threads'],
-				action(_, props) {
-					const { message = messageArgs(this).msg } = props;
+				action(this: unknown, _, { message = messageArgs(this).msg }) {
 					const language = AutoTranslate.getLanguage(message.rid);
 					if (!hasTranslationLanguageInMessage(message, language) && !hasTranslationLanguageInAttachments(message.attachments, language)) {
 						AutoTranslate.messageIdsToWait.add(message._id);
@@ -35,6 +35,7 @@ Meteor.startup(() => {
 					if (!user) {
 						return false;
 					}
+
 					const language = subscription?.autoTranslateLanguage || AutoTranslate.getLanguage(message.rid) || '';
 					const isLivechatRoom = roomCoordinator.isLivechatRoom(room?.t);
 					const isDifferentUser = message?.u && message.u._id !== user._id;
@@ -43,8 +44,7 @@ Meteor.startup(() => {
 						hasTranslationLanguageInMessage(message, language) || hasTranslationLanguageInAttachments(message.attachments, language);
 
 					return Boolean(
-						(message as { autoTranslateShowInverse?: boolean }).autoTranslateShowInverse ||
-							(isDifferentUser && autoTranslateEnabled && !hasLanguage),
+						(message as ITranslatedMessage).autoTranslateShowInverse || (isDifferentUser && autoTranslateEnabled && !hasLanguage),
 					);
 				},
 				order: 90,
@@ -77,10 +77,7 @@ Meteor.startup(() => {
 						hasTranslationLanguageInMessage(message, language) || hasTranslationLanguageInAttachments(message.attachments, language);
 
 					return Boolean(
-						!(message as { autoTranslateShowInverse?: boolean }).autoTranslateShowInverse &&
-							isDifferentUser &&
-							autoTranslateEnabled &&
-							hasLanguage,
+						!(message as ITranslatedMessage).autoTranslateShowInverse && isDifferentUser && autoTranslateEnabled && hasLanguage,
 					);
 				},
 				order: 90,

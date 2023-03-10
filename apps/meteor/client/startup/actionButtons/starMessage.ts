@@ -1,3 +1,4 @@
+import type { IUser } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 
 import { settings } from '../../../app/settings/client';
@@ -15,7 +16,7 @@ Meteor.startup(() => {
 		context: ['starred', 'message', 'message-mobile', 'threads', 'federated'],
 		action(_, props) {
 			const { message = messageArgs(this).msg } = props;
-			Meteor.call('starMessage', { ...message, starred: true }, (error: any) => {
+			Meteor.call('starMessage', { ...message, starred: true }, (error: Error) => {
 				if (error) {
 					dispatchToastMessage({ type: 'error', message: error });
 					return;
@@ -33,7 +34,7 @@ Meteor.startup(() => {
 				return false;
 			}
 
-			return !Array.isArray(message.starred) || !message.starred.find((star: any) => star._id === user?._id);
+			return !Array.isArray(message.starred) || !message.starred.find((star: Pick<IUser, '_id'>) => star._id === user?._id);
 		},
 		order: 9,
 		group: 'menu',

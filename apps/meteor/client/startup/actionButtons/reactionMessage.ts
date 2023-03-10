@@ -13,7 +13,7 @@ Meteor.startup(() => {
 		context: ['message', 'message-mobile', 'threads', 'federated'],
 		action(this: unknown, event, { message = messageArgs(this).msg }) {
 			event.stopPropagation();
-			EmojiPicker.open(event.currentTarget as Element, (emoji) => Meteor.call('setReaction', `:${emoji}:`, message._id));
+			EmojiPicker.open(event.currentTarget, (emoji) => Meteor.call('setReaction', `:${emoji}:`, message._id));
 		},
 		condition({ message, user, room, subscription }) {
 			if (!user) {

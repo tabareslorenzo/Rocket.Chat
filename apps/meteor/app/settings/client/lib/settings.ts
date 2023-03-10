@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import type { SettingValue } from '@rocket.chat/core-typings';
+import type { EJSONableProperty } from 'meteor/ejson';
 
 import { PublicSettingsCachedCollection } from '../../../../client/lib/settings/PublicSettingsCachedCollection';
 import { SettingsBase } from '../../lib/settings';
@@ -12,14 +13,14 @@ class Settings extends SettingsBase {
 
 	dict = new ReactiveDict('settings');
 
-	get(_id: string | RegExp, ...args: []): any {
+	get<TValue extends EJSONableProperty>(_id: string | RegExp, ...args: []): TValue | undefined {
 		if (_id instanceof RegExp) {
 			throw new Error('RegExp Settings.get(RegExp)');
 		}
 		if (args.length > 0) {
 			throw new Error('settings.get(String, callback) only works on backend');
 		}
-		return this.dict.get(_id);
+		return this.dict.get(_id) as TValue | undefined;
 	}
 
 	private _storeSettingValue(record: { _id: string; value: SettingValue }, initialLoad: boolean): void {

@@ -19,8 +19,8 @@ Meteor.startup(() => {
 				'settings.preferences.notificationsSoundVolume': 1,
 			},
 		});
-		const newRoomNotification = getUserPreference(user, 'newRoomNotification');
-		const audioVolume = getUserPreference(user, 'notificationsSoundVolume') as number;
+		const newRoomNotification = getUserPreference<string>(user, 'newRoomNotification');
+		const audioVolume = getUserPreference<number>(user, 'notificationsSoundVolume', 100);
 
 		if ((Session.get('newRoomSound') || []).length > 0) {
 			Meteor.defer(() => {

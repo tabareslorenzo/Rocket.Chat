@@ -1,5 +1,4 @@
 import { usePermission } from '@rocket.chat/ui-contexts';
-import type { LazyExoticComponent, FC } from 'react';
 import { useMemo, lazy } from 'react';
 
 import { addAction } from '../../views/room/lib/Toolbox';
@@ -15,7 +14,7 @@ addAction('export-messages', ({ room }) => {
 						anonymous: true,
 						title: 'Export_Messages',
 						icon: 'mail',
-						template: lazy(() => import('../../views/room/contextualBar/ExportMessages')) as LazyExoticComponent<FC>,
+						template: lazy(() => import('../../views/room/contextualBar/ExportMessages')),
 						full: true,
 						order: 12,
 				  }

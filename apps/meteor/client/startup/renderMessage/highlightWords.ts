@@ -6,7 +6,7 @@ import { callbacks } from '../../../lib/callbacks';
 
 Meteor.startup(() => {
 	Tracker.autorun(() => {
-		const highlights = getUserPreference(Meteor.userId(), 'highlights') as (string | undefined)[] | undefined;
+		const highlights = getUserPreference<(string | undefined)[]>(Meteor.userId() ?? undefined, 'highlights');
 		const isEnabled = highlights?.some((highlight) => highlight?.trim()) ?? false;
 
 		if (!isEnabled) {
@@ -15,7 +15,7 @@ Meteor.startup(() => {
 		}
 
 		const options = {
-			wordsToHighlight: (highlights?.filter((highlight) => highlight?.trim()) as string[]) || [],
+			wordsToHighlight: highlights?.filter((highlight): highlight is string => !!highlight?.trim()) || [],
 		};
 
 		import('../../../app/highlight-words/client').then(({ createHighlightWordsMessageRenderer }) => {

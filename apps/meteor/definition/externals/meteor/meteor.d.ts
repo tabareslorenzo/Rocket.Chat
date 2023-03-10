@@ -1,3 +1,4 @@
+import type { IUser } from '@rocket.chat/core-typings';
 import 'meteor/meteor';
 import type { IStreamerConstructor, IStreamer } from 'meteor/rocketchat:streamer';
 
@@ -87,5 +88,7 @@ declare module 'meteor/meteor' {
 			password: string,
 			cb: (error?: Error | Meteor.Error | Meteor.TypedError) => void,
 		): void;
+
+		function user(): IUser | null;
 	}
 }

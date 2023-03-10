@@ -18,6 +18,12 @@ Meteor.methods({
 			});
 		}
 
+		if (!user.services?.totp?.secret) {
+			throw new Meteor.Error('error-user-has-no-2fa', 'User has no 2FA', {
+				method: '2fa:disable',
+			});
+		}
+
 		const verified = TOTP.verify({
 			secret: user.services.totp.secret,
 			token: code,

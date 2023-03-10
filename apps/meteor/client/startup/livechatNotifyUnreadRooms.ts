@@ -7,7 +7,7 @@ import { settings } from '../../app/settings/client';
 import { getUserPreference } from '../../app/utils/client';
 
 Meteor.startup(() => {
-	let audio: HTMLMediaElement | null = null;
+	let audio: HTMLMediaElement | undefined;
 
 	Tracker.autorun(() => {
 		if (!settings.get('Livechat_continuous_sound_notification_new_livechat_room')) {
@@ -35,6 +35,6 @@ Meteor.startup(() => {
 
 		const newRoomNotification = getUserPreference(user, 'newRoomNotification');
 
-		audio = CustomSounds.play(newRoomNotification, { loop: true }) as HTMLMediaElement | null;
+		audio = CustomSounds.play(newRoomNotification, { loop: true });
 	});
 });
