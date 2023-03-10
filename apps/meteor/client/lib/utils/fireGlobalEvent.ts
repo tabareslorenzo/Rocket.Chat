@@ -19,7 +19,7 @@ export const fireGlobalEvent = (eventName: string, detail?: unknown): void => {
 					eventName,
 					data: detail,
 				},
-				settings.get('Iframe_Integration_send_target_origin'),
+				settings.get('Iframe_Integration_send_target_origin') ?? '/',
 			);
 		}
 	});

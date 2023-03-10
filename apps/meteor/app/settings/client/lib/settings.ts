@@ -13,7 +13,7 @@ class Settings extends SettingsBase {
 
 	dict = new ReactiveDict('settings');
 
-	get<TValue extends EJSONableProperty>(_id: string | RegExp, ...args: []): TValue | undefined {
+	get<TValue extends EJSONableProperty = any>(_id: string | RegExp, ...args: []): TValue | undefined {
 		if (_id instanceof RegExp) {
 			throw new Error('RegExp Settings.get(RegExp)');
 		}

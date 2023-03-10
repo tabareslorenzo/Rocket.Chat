@@ -24,7 +24,7 @@ Meteor.startup(() => {
 				return false;
 			}
 
-			return settings.get('Webdav_Integration_Enabled');
+			return settings.get('Webdav_Integration_Enabled') ?? false;
 		},
 		action(_, props) {
 			const { message = messageArgs(this).msg } = props;

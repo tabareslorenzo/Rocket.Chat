@@ -17,19 +17,20 @@ export const {
 		href: 'profile',
 		i18nLabel: 'Profile',
 		icon: 'user',
-		permissionGranted: (): boolean => settings.get('Accounts_AllowUserProfileChange'),
+		permissionGranted: (): boolean => settings.get('Accounts_AllowUserProfileChange') ?? false,
 	},
 	{
 		href: 'security',
 		i18nLabel: 'Security',
 		icon: 'lock',
-		permissionGranted: (): boolean => settings.get('Accounts_TwoFactorAuthentication_Enabled') || settings.get('E2E_Enable'),
+		permissionGranted: (): boolean =>
+			(settings.get('Accounts_TwoFactorAuthentication_Enabled') ?? false) || (settings.get('E2E_Enable') ?? false),
 	},
 	{
 		href: 'integrations',
 		i18nLabel: 'Integrations',
 		icon: 'code',
-		permissionGranted: (): boolean => settings.get('Webdav_Integration_Enabled'),
+		permissionGranted: (): boolean => settings.get('Webdav_Integration_Enabled') ?? false,
 	},
 	{
 		href: 'tokens',

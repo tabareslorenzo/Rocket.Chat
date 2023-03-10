@@ -64,6 +64,6 @@ export const formattingButtons: ReadonlyArray<FormattingButton> = [
 			}
 		},
 		link: 'https://khan.github.io/KaTeX/function-support.html',
-		condition: () => settings.get('Katex_Enabled'),
+		condition: () => settings.get('Katex_Enabled') ?? false,
 	},
 ] as const;

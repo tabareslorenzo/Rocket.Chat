@@ -21,7 +21,7 @@ Template.username.onCreated(function () {
 		const accountsCustomFields = settings.get('Accounts_CustomFields');
 		if (typeof accountsCustomFields === 'string' && accountsCustomFields.trim() !== '') {
 			try {
-				return this.customFields.set(JSON.parse(settings.get('Accounts_CustomFields')));
+				return this.customFields.set(JSON.parse(settings.get('Accounts_CustomFields') ?? 'null'));
 			} catch (error1) {
 				return console.error('Invalid JSON for Accounts_CustomFields');
 			}
