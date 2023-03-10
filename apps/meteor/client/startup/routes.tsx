@@ -33,6 +33,13 @@ const OmnichannelQueueList = lazy(() => import('../views/omnichannel/queueList')
 const OAuthAuthorizationPage = lazy(() => import('../views/oauth/OAuthAuthorizationPage'));
 const OAuthErrorPage = lazy(() => import('../views/oauth/OAuthErrorPage'));
 
+declare module 'meteor/meteor' {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace Meteor {
+		function loginWithSamlToken(token: string, callback?: (error?: unknown) => void): void;
+	}
+}
+
 FlowRouter.wait();
 
 FlowRouter.route('/', {
@@ -108,7 +115,7 @@ FlowRouter.route('/home', {
 			FlowRouter.setQueryParams({
 				saml_idp_credentialToken: null,
 			});
-			(Meteor as any).loginWithSamlToken(token, (error?: unknown) => {
+			Meteor.loginWithSamlToken(token, (error?: unknown) => {
 				if (error) {
 					dispatchToastMessage({ type: 'error', message: error });
 				}

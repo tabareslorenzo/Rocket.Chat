@@ -5,6 +5,14 @@ import AppRoot from '../views/root/AppRoot';
 import PageLoading from '../views/root/PageLoading';
 
 const Root = lazy(() => import('../components/root/ErrorBoundary'));
+
+declare global {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	interface Window {
+		__BUGSNAG_KEY__: string;
+	}
+}
+
 const createContainer = (): Element => {
 	const container = document.getElementById('react-root');
 
@@ -18,8 +26,9 @@ const createContainer = (): Element => {
 };
 
 const container = createContainer();
+
 render(
-	(window as any).__BUGSNAG_KEY__ ? (
+	window.__BUGSNAG_KEY__ ? (
 		<Suspense fallback={<PageLoading />}>
 			<Root>
 				<AppRoot />

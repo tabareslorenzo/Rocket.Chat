@@ -9,6 +9,6 @@ Meteor.startup(() => {
 		if (value == null || value.trim() === '') {
 			return;
 		}
-		(window as any).__meteor_runtime_config__.ROOT_URL = value;
+		window.__meteor_runtime_config__.ROOT_URL = value;
 	});
 });

@@ -2,9 +2,11 @@ import type { IUser } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 
+import type { MinimongoCollection } from '../definitions/MinimongoCollection';
+
 Meteor.startup(() => {
 	// TODO: find correct typing for meteor collection
-	(Meteor.users as any)
+	(Meteor.users as unknown as MinimongoCollection<IUser>)
 		.find(
 			{},
 			{

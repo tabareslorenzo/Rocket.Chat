@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import mem from 'mem';
+import { isTranslatedMessageAttachment } from '@rocket.chat/core-typings';
 import type {
+	IMessage,
 	IRoom,
 	ISubscription,
 	ISupportedLanguage,
@@ -9,7 +11,6 @@ import type {
 	IUser,
 	MessageAttachmentDefault,
 } from '@rocket.chat/core-typings';
-import { isTranslatedMessageAttachment } from '@rocket.chat/core-typings';
 
 import { Subscriptions, Messages } from '../../../models/client';
 import { hasPermission } from '../../../authorization/client';
@@ -34,7 +35,7 @@ const getUsername = () =>
 export const AutoTranslate = {
 	initialized: false,
 	providersMetadata: {} as { [providerNamer: string]: { name: string; displayName: string } },
-	messageIdsToWait: {} as { [messageId: string]: string },
+	messageIdsToWait: new Set<IMessage['_id']>(),
 	supportedLanguages: [] as ISupportedLanguage[] | undefined,
 
 	findSubscriptionByRid: mem((rid) => Subscriptions.findOne({ rid })),
@@ -177,9 +178,9 @@ export const createAutoTranslateMessageStreamHandler = (): ((message: ITranslate
 			) {
 				// || (message.attachments && !_.find(message.attachments, attachment => { return attachment.translations && attachment.translations[language]; }))
 				Messages.update({ _id: message._id }, { $set: { autoTranslateFetching: true } });
-			} else if (AutoTranslate.messageIdsToWait[message._id] !== undefined && subscription && subscription.autoTranslate !== true) {
+			} else if (AutoTranslate.messageIdsToWait.has(message._id) !== undefined && subscription && subscription.autoTranslate !== true) {
 				Messages.update({ _id: message._id }, { $set: { autoTranslateShowInverse: true }, $unset: { autoTranslateFetching: true } });
-				delete AutoTranslate.messageIdsToWait[message._id];
+				AutoTranslate.messageIdsToWait.delete(message._id);
 			} else if (message.autoTranslateFetching === true) {
 				Messages.update({ _id: message._id }, { $unset: { autoTranslateFetching: true } });
 			}

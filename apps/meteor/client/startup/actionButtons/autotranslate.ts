@@ -24,7 +24,7 @@ Meteor.startup(() => {
 					const { message = messageArgs(this).msg } = props;
 					const language = AutoTranslate.getLanguage(message.rid);
 					if (!hasTranslationLanguageInMessage(message, language) && !hasTranslationLanguageInAttachments(message.attachments, language)) {
-						(AutoTranslate.messageIdsToWait as any)[message._id] = true;
+						AutoTranslate.messageIdsToWait.add(message._id);
 						Messages.update({ _id: message._id }, { $set: { autoTranslateFetching: true } });
 						Meteor.call('autoTranslate.translateMessage', message, language);
 					}
@@ -58,7 +58,7 @@ Meteor.startup(() => {
 					const { message = messageArgs(this).msg } = props;
 					const language = AutoTranslate.getLanguage(message.rid);
 					if (!hasTranslationLanguageInMessage(message, language) && !hasTranslationLanguageInAttachments(message.attachments, language)) {
-						(AutoTranslate.messageIdsToWait as any)[message._id] = true;
+						AutoTranslate.messageIdsToWait.add(message._id);
 						Messages.update({ _id: message._id }, { $set: { autoTranslateFetching: true } });
 						Meteor.call('autoTranslate.translateMessage', message, language);
 					}
