@@ -1,11 +1,11 @@
-import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Meteor } from 'meteor/meteor';
 
-import { RoomManager, MessageAction } from '../../ui-utils/client';
-import { messageArgs } from '../../../client/lib/utils/messageArgs';
-import { ChatSubscription } from '../../models/client';
-import { roomCoordinator } from '../../../client/lib/rooms/roomCoordinator';
-import { dispatchToastMessage } from '../../../client/lib/toast';
+import { ChatSubscription } from '../../../app/models/client';
+import { RoomManager, MessageAction } from '../../../app/ui-utils/client';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { dispatchToastMessage } from '../../lib/toast';
+import { messageArgs } from '../../lib/utils/messageArgs';
 
 Meteor.startup(() => {
 	MessageAction.addButton({
@@ -13,9 +13,8 @@ Meteor.startup(() => {
 		icon: 'flag',
 		label: 'Mark_unread',
 		context: ['message', 'message-mobile', 'threads'],
-		action(_, props) {
-			const { message = messageArgs(this).msg } = props;
-			return Meteor.call('unreadMessages', message, function (error: unknown) {
+		action(this: unknown, _, { message = messageArgs(this).msg }) {
+			return Meteor.call('unreadMessages', message, (error: unknown) => {
 				if (error) {
 					dispatchToastMessage({ type: 'error', message: error });
 					return;

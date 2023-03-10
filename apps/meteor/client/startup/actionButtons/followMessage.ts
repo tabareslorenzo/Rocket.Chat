@@ -1,15 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
+import { Tracker } from 'meteor/tracker';
 
-import { Messages } from '../../../models/client';
-import { settings } from '../../../settings/client';
-import { MessageAction } from '../../../ui-utils/client';
-import { callWithErrorHandling } from '../../../../client/lib/utils/callWithErrorHandling';
-import { dispatchToastMessage } from '../../../../client/lib/toast';
-import { roomCoordinator } from '../../../../client/lib/rooms/roomCoordinator';
+import { Messages } from '../../../app/models/client';
+import { settings } from '../../../app/settings/client';
+import { MessageAction } from '../../../app/ui-utils/client';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { dispatchToastMessage } from '../../lib/toast';
+import { callWithErrorHandling } from '../../lib/utils/callWithErrorHandling';
 
-Meteor.startup(function () {
+Meteor.startup(() => {
 	Tracker.autorun(() => {
 		if (!settings.get('Threads_enabled')) {
 			return MessageAction.removeButton('follow-message');

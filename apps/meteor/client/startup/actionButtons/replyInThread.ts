@@ -1,13 +1,13 @@
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
-import { settings } from '../../../settings/client';
-import { MessageAction } from '../../../ui-utils/client';
-import { messageArgs } from '../../../../client/lib/utils/messageArgs';
-import { roomCoordinator } from '../../../../client/lib/rooms/roomCoordinator';
+import { settings } from '../../../app/settings/client';
+import { MessageAction } from '../../../app/ui-utils/client';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { messageArgs } from '../../lib/utils/messageArgs';
 
-Meteor.startup(function () {
+Meteor.startup(() => {
 	Tracker.autorun(() => {
 		if (!settings.get('Threads_enabled')) {
 			return MessageAction.removeButton('reply-in-thread');

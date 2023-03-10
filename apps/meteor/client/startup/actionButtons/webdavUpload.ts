@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 
-import { getURL } from '../../utils/client';
-import { WebdavAccounts } from '../../models/client';
-import { settings } from '../../settings/client';
-import { MessageAction } from '../../ui-utils/client';
-import { messageArgs } from '../../../client/lib/utils/messageArgs';
-import { imperativeModal } from '../../../client/lib/imperativeModal';
-import SaveToWebdav from '../../../client/views/room/webdav/SaveToWebdavModal';
+import { WebdavAccounts } from '../../../app/models/client';
+import { settings } from '../../../app/settings/client';
+import { MessageAction } from '../../../app/ui-utils/client';
+import { getURL } from '../../../app/utils/client';
+import { imperativeModal } from '../../lib/imperativeModal';
+import { messageArgs } from '../../lib/utils/messageArgs';
+import SaveToWebdav from '../../views/room/webdav/SaveToWebdavModal';
 
-Meteor.startup(function () {
+Meteor.startup(() => {
 	MessageAction.addButton({
 		id: 'webdav-upload',
 		icon: 'upload',

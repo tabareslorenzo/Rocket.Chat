@@ -57,7 +57,7 @@ export type MessageActionConfig = {
 	group?: MessageActionGroup | MessageActionGroup[];
 	context?: MessageActionContext[];
 	action: (
-		e: Pick<Event, 'preventDefault' | 'stopPropagation'>,
+		e: Pick<Event, 'preventDefault' | 'stopPropagation' | 'currentTarget'>,
 		{
 			message,
 			tabbar,

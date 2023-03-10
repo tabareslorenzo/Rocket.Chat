@@ -1,17 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import { AutoTranslate } from './autotranslate';
-import { settings } from '../../../settings/client';
-import { hasAtLeastOnePermission } from '../../../authorization/client';
-import { MessageAction } from '../../../ui-utils/client/lib/MessageAction';
-import { messageArgs } from '../../../../client/lib/utils/messageArgs';
-import { Messages } from '../../../models/client';
-import {
-	hasTranslationLanguageInAttachments,
-	hasTranslationLanguageInMessage,
-} from '../../../../client/views/room/MessageList/lib/autoTranslate';
-import { roomCoordinator } from '../../../../client/lib/rooms/roomCoordinator';
+import { hasAtLeastOnePermission } from '../../../app/authorization/client';
+import { AutoTranslate } from '../../../app/autotranslate/client/lib/autotranslate';
+import { Messages } from '../../../app/models/client';
+import { settings } from '../../../app/settings/client';
+import { MessageAction } from '../../../app/ui-utils/client/lib/MessageAction';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { messageArgs } from '../../lib/utils/messageArgs';
+import { hasTranslationLanguageInAttachments, hasTranslationLanguageInMessage } from '../../views/room/MessageList/lib/autoTranslate';
 
 Meteor.startup(() => {
 	AutoTranslate.init();

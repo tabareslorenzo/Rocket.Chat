@@ -10,6 +10,5 @@ Meteor.startup(() => {
 		}
 		c.stop();
 		import('./startup/sync');
-		import('./actionButton');
 	});
 });

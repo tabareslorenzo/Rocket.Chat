@@ -1,22 +1,25 @@
 import { Meteor } from 'meteor/meteor';
 
-import { MessageAction } from '../../ui-utils/client';
-import { messageArgs } from '../../../client/lib/utils/messageArgs';
-import { EmojiPicker } from '../../emoji/client';
-import { roomCoordinator } from '../../../client/lib/rooms/roomCoordinator';
+import { EmojiPicker } from '../../../app/emoji/client';
+import { MessageAction } from '../../../app/ui-utils/client';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { messageArgs } from '../../lib/utils/messageArgs';
 
-Meteor.startup(function () {
+Meteor.startup(() => {
 	MessageAction.addButton({
 		id: 'reaction-message',
 		icon: 'add-reaction',
 		label: 'Add_Reaction',
 		context: ['message', 'message-mobile', 'threads', 'federated'],
-		action(event, props) {
+		action(this: unknown, event, { message = messageArgs(this).msg }) {
 			event.stopPropagation();
-			const { message = messageArgs(this).msg } = props;
-			EmojiPicker.open(event.currentTarget, (emoji) => Meteor.call('setReaction', `:${emoji}:`, message._id));
+			EmojiPicker.open(event.currentTarget as Element, (emoji) => Meteor.call('setReaction', `:${emoji}:`, message._id));
 		},
 		condition({ message, user, room, subscription }) {
+			if (!user) {
+				return false;
+			}
+
 			if (!room) {
 				return false;
 			}

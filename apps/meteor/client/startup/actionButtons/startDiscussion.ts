@@ -1,15 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import { settings } from '../../settings/client';
-import { hasPermission } from '../../authorization/client';
-import { MessageAction } from '../../ui-utils/client';
-import { messageArgs } from '../../../client/lib/utils/messageArgs';
-import { imperativeModal } from '../../../client/lib/imperativeModal';
-import CreateDiscussion from '../../../client/components/CreateDiscussion/CreateDiscussion';
-import { roomCoordinator } from '../../../client/lib/rooms/roomCoordinator';
+import { hasPermission } from '../../../app/authorization/client';
+import { settings } from '../../../app/settings/client';
+import { MessageAction } from '../../../app/ui-utils/client/lib/MessageAction';
+import CreateDiscussion from '../../components/CreateDiscussion/CreateDiscussion';
+import { imperativeModal } from '../../lib/imperativeModal';
+import { roomCoordinator } from '../../lib/rooms/roomCoordinator';
+import { messageArgs } from '../../lib/utils/messageArgs';
 
-Meteor.startup(function () {
+Meteor.startup(() => {
 	Tracker.autorun(() => {
 		if (!settings.get('Discussion_enabled')) {
 			return MessageAction.removeButton('start-discussion');
@@ -20,9 +20,7 @@ Meteor.startup(function () {
 			icon: 'discussion',
 			label: 'Discussion_start',
 			context: ['message', 'message-mobile'],
-			async action(_, props) {
-				const { message = messageArgs(this).msg, room } = props;
-
+			async action(this: unknown, _, { message = messageArgs(this).msg, room }) {
 				imperativeModal.open({
 					component: CreateDiscussion,
 					props: {
@@ -43,7 +41,7 @@ Meteor.startup(function () {
 				subscription,
 				user,
 			}) {
-				if (drid || !Number.isNaN(dcount)) {
+				if (drid || (!Number.isNaN(dcount) && dcount !== undefined)) {
 					return false;
 				}
 				if (!subscription) {

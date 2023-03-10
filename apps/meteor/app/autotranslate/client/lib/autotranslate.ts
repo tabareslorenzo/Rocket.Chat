@@ -19,19 +19,17 @@ import {
 	hasTranslationLanguageInMessage,
 } from '../../../../client/views/room/MessageList/lib/autoTranslate';
 
-let userLanguage = 'en';
-let username = '';
-
-Meteor.startup(() => {
-	Tracker.autorun(() => {
+const getUserLanguage = () =>
+	Tracker.nonreactive(() => {
 		const user: Pick<IUser, 'language' | 'username'> | null = Meteor.user();
-		if (!user) {
-			return;
-		}
-		userLanguage = user.language || 'en';
-		username = user.username || '';
+		return user?.language || 'en';
 	});
-});
+
+const getUsername = () =>
+	Tracker.nonreactive(() => {
+		const user: Pick<IUser, 'language' | 'username'> | null = Meteor.user();
+		return user?.username || '';
+	});
 
 export const AutoTranslate = {
 	initialized: false,
@@ -46,7 +44,7 @@ export const AutoTranslate = {
 		if (rid) {
 			subscription = this.findSubscriptionByRid(rid);
 		}
-		const language = (subscription?.autoTranslateLanguage || userLanguage || window.defaultUserLanguage?.()) as string;
+		const language = (subscription?.autoTranslateLanguage || getUserLanguage() || window.defaultUserLanguage?.()) as string;
 		if (language.indexOf('-') !== -1) {
 			if (!(this.supportedLanguages || []).some((supportedLanguage) => supportedLanguage.language === language)) {
 				return language.slice(0, 2);
@@ -64,7 +62,7 @@ export const AutoTranslate = {
 			return attachments;
 		}
 		for (const attachment of attachments) {
-			if (attachment.author_name !== username) {
+			if (attachment.author_name !== getUsername()) {
 				if (attachment.text && attachment.translations && attachment.translations[language]) {
 					attachment.translations.original = attachment.text;
 

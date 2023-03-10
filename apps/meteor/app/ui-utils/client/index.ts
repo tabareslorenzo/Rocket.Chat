@@ -1,5 +1,3 @@
-import './lib/messageActionDefault';
-
 export { AccountBox } from './lib/AccountBox';
 export { MessageAction } from './lib/MessageAction';
 export { messageBox } from './lib/messageBox';
