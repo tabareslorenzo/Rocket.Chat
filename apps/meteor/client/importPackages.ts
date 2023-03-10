@@ -60,7 +60,6 @@ import '../app/models/client';
 import '../app/notifications/client';
 import '../app/ui-utils/client';
 import '../app/ui-cached-collection/client';
-import '../app/action-links/client';
 import '../app/reactions/client';
 import '../app/livechat/client';
 import '../app/meteor-autocomplete/client';
