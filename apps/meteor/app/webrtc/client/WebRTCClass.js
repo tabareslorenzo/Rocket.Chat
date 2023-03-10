@@ -1,6 +1,5 @@
 import { Emitter } from '@rocket.chat/emitter';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
 
@@ -968,19 +967,5 @@ const WebRTC = new (class {
 		return this.instancesByRoomId[rid];
 	}
 })();
-
-Meteor.startup(function () {
-	Tracker.autorun(function () {
-		if (Meteor.userId()) {
-			Notifications.onUser(WEB_RTC_EVENTS.WEB_RTC, (type, data) => {
-				if (data.room == null) {
-					return;
-				}
-				const webrtc = WebRTC.getInstanceByRoomId(data.room);
-				webrtc.onUserStream(type, data);
-			});
-		}
-	});
-});
 
 export { WebRTC };

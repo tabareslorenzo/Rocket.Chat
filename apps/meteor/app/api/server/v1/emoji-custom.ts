@@ -14,7 +14,7 @@ API.v1.addRoute(
 	{
 		async get() {
 			const { query } = this.parseJsonQuery();
-			const { updatedSince } = this.queryParams;
+			const updatedSince = this.queryParams?.updatedSince;
 			if (updatedSince) {
 				const updatedSinceDate = new Date(updatedSince);
 				if (isNaN(Date.parse(updatedSince))) {

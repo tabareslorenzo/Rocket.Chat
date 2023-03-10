@@ -10,6 +10,7 @@ const removeFromRecent = (emoji) => {
 };
 
 export const emoji = {
+	/** @type {Record<string, any>} */
 	packages: {
 		base: {
 			emojiCategories: [{ key: 'recent', i18n: 'Frequently_Used' }],
@@ -29,6 +30,6 @@ export const emoji = {
 			},
 		},
 	},
-	/** @type {Record<string, unknown>} */
+	/** @type {Record<string, any>} */
 	list: {},
 };

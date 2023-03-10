@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Blaze } from 'meteor/blaze';
 import { Template } from 'meteor/templating';
 import { escapeHTML } from '@rocket.chat/string-helpers';
@@ -113,7 +112,7 @@ const defaultGalleryOptions = {
 	},
 };
 
-const createEventListenerFor =
+export const createEventListenerFor =
 	(className: string) =>
 	(event: JQuery.ClickEvent): void => {
 		event.preventDefault();
@@ -154,7 +153,3 @@ const createEventListenerFor =
 				Promise.resolve(),
 			);
 	};
-
-Meteor.startup(() => {
-	$(document).on('click', '.gallery-item', createEventListenerFor('.gallery-item'));
-});

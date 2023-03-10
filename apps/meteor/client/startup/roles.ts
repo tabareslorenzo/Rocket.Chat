@@ -1,10 +1,11 @@
+import type { IRole } from '@rocket.chat/core-typings';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 
-import { CachedCollectionManager } from '../../ui-cached-collection/client';
-import { APIClient } from '../../utils/client/lib/RestApiClient';
-import { Roles } from '../../models/client';
-import { rolesStreamer } from './lib/streamer';
+import { rolesStreamer } from '../../app/authorization/client/lib/streamer';
+import { Roles } from '../../app/models/client';
+import { CachedCollectionManager } from '../../app/ui-cached-collection/client';
+import { APIClient } from '../../app/utils/client/lib/RestApiClient';
 
 Meteor.startup(() => {
 	CachedCollectionManager.onLogin(async () => {
@@ -17,20 +18,20 @@ Meteor.startup(() => {
 	});
 
 	const events = {
-		changed: (role) => {
+		changed: (role: IRole & { type?: 'changed' | 'removed' }) => {
 			delete role.type;
 			Roles.upsert({ _id: role._id }, role);
 		},
-		removed: (role) => {
+		removed: (role: IRole) => {
 			Roles.remove({ _id: role._id });
 		},
-	};
+	} as const;
 
 	Tracker.autorun((c) => {
 		if (!Meteor.userId()) {
 			return;
 		}
-		rolesStreamer.on('roles', (role) => events[role.type](role));
+		rolesStreamer.on('roles', (role: IRole & { type: 'changed' | 'removed' }) => events[role.type](role));
 		c.stop();
 	});
 });

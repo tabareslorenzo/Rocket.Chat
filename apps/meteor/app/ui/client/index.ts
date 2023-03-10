@@ -1,5 +1,4 @@
 import './lib/accounts';
-import './lib/collections';
 import './lib/iframeCommands';
 import './lib/parentTemplate';
 import './lib/codeMirror';

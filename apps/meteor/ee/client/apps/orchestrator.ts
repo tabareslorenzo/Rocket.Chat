@@ -6,10 +6,8 @@ import type { IPermission } from '@rocket.chat/apps-engine/definition/permission
 import type { ISetting } from '@rocket.chat/apps-engine/definition/settings';
 import type { IAppStorageItem } from '@rocket.chat/apps-engine/server/storage/IAppStorageItem';
 import type { AppScreenshot, AppRequestFilter, Serialized, AppRequestsStats, PaginatedAppRequests } from '@rocket.chat/core-typings';
-import { Meteor } from 'meteor/meteor';
 
 import { hasAtLeastOnePermission } from '../../../app/authorization/client';
-import { CachedCollectionManager } from '../../../app/ui-cached-collection/client';
 import { APIClient } from '../../../app/utils/client';
 import { dispatchToastMessage } from '../../../client/lib/toast';
 import type { App } from '../../../client/views/marketplace/types';
@@ -272,10 +270,3 @@ class AppClientOrchestrator {
 }
 
 export const Apps = new AppClientOrchestrator();
-
-Meteor.startup(() => {
-	CachedCollectionManager.onLogin(() => {
-		Apps.getAppClientManager().initialize();
-		Apps.load();
-	});
-});

@@ -54,7 +54,7 @@ export type EmojiCustomEndpoints = {
 		}>;
 	};
 	'/v1/emoji-custom.list': {
-		GET: (params: emojiCustomList) => {
+		GET: (params?: emojiCustomList) => {
 			emojis: {
 				update: IEmojiCustom[];
 				remove: IEmojiCustom[];

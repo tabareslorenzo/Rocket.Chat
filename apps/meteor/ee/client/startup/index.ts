@@ -1,6 +1,10 @@
 import '../apps';
+import './appsOrchestration';
 import './audit';
+import './businessHours';
+import './cannedResponses';
 import './deviceManagement';
 import './engagementDashboard';
-import './slashCommands';
 import './readReceipt';
+import './rolesRestrictions';
+import './slashCommands';

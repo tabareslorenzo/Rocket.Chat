@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
-import { MessageTypes } from '../../ui-utils/client';
-import { otrSystemMessages } from '../lib/constants';
+import { otrSystemMessages } from '../../app/otr/lib/constants';
+import { MessageTypes } from '../../app/ui-utils/client';
 
 Meteor.startup(() => {
 	MessageTypes.registerType({

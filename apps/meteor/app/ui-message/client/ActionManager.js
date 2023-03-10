@@ -1,12 +1,9 @@
 import { UIKitIncomingInteractionType } from '@rocket.chat/apps-engine/definition/uikit';
-import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Random } from 'meteor/random';
 import { Emitter } from '@rocket.chat/emitter';
 import { UIKitInteractionTypes } from '@rocket.chat/core-typings';
 
-import Notifications from '../../notifications/client/lib/Notifications';
-import { CachedCollectionManager } from '../../ui-cached-collection/client';
 import { APIClient, t } from '../../utils/client';
 import * as banners from '../../../client/lib/banners';
 import { dispatchToastMessage } from '../../../client/lib/toast';
@@ -44,7 +41,7 @@ export const generateTriggerId = (appId) => {
 	return triggerId;
 };
 
-const handlePayloadUserInteraction = (type, { /* appId,*/ triggerId, ...data }) => {
+export const handlePayloadUserInteraction = (type, { /* appId,*/ triggerId, ...data }) => {
 	if (!triggersId.has(triggerId)) {
 		return;
 	}
@@ -247,11 +244,3 @@ export const getUserInteractionPayloadByViewId = (viewId) => {
 
 	return instance.payload;
 };
-
-Meteor.startup(() =>
-	CachedCollectionManager.onLogin(() =>
-		Notifications.onUser('uiInteraction', ({ type, ...data }) => {
-			handlePayloadUserInteraction(type, data);
-		}),
-	),
-);

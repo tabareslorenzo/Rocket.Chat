@@ -1,7 +1,6 @@
 import type { IRoom, IUser } from '@rocket.chat/core-typings';
 import { Emitter } from '@rocket.chat/emitter';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 
 import { Notifications } from '../../app/notifications/client';
 import { APIClient } from '../../app/utils/client';
@@ -750,5 +749,3 @@ export const VideoConfManager = new (class VideoConfManager extends Emitter<Vide
 		return Boolean(this.incomingDirectCalls.get(callId)?.dismissed);
 	}
 })();
-
-Meteor.startup(() => Tracker.autorun(() => VideoConfManager.updateUser()));

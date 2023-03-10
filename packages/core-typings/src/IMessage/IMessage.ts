@@ -94,6 +94,7 @@ export type MessageTypesValues =
 	| 'command'
 	| 'videoconf'
 	| 'message_pinned'
+	| 'discussion-created'
 	| LivechatMessageTypes
 	| TeamMessageTypes
 	| VoipMessageTypesValues

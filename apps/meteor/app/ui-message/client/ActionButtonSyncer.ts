@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import type { IUIActionButton } from '@rocket.chat/apps-engine/definition/ui';
 import { UIActionButtonContext } from '@rocket.chat/apps-engine/definition/ui';
 
@@ -52,5 +51,3 @@ export const loadButtons = (): Promise<void> =>
 		registeredButtons = [];
 		value.map(addButton);
 	});
-
-Meteor.startup(() => loadButtons());

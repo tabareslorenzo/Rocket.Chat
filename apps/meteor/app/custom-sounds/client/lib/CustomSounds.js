@@ -1,7 +1,5 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { CachedCollectionManager } from '../../../ui-cached-collection/client';
 import { getURL } from '../../../utils/client';
 
 const getCustomSoundId = (sound) => `custom-sound-${sound}`;
@@ -127,13 +125,3 @@ class CustomSoundsClass {
 }
 
 export const CustomSounds = new CustomSoundsClass();
-
-Meteor.startup(() =>
-	CachedCollectionManager.onLogin(() => {
-		Meteor.call('listCustomSounds', (error, result) => {
-			for (const sound of result) {
-				CustomSounds.add(sound);
-			}
-		});
-	}),
-);

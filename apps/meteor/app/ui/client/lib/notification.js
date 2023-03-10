@@ -7,7 +7,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Session } from 'meteor/session';
 
 import { e2e } from '../../../e2e/client';
-import { Users, ChatSubscription } from '../../../models/client';
+import { ChatSubscription } from '../../../models/client';
 import { getUserPreference } from '../../../utils/client';
 import { getUserAvatarURL } from '../../../utils/lib/getUserAvatarURL';
 import { CustomSounds } from '../../../custom-sounds/client/lib/CustomSounds';
@@ -190,28 +190,3 @@ export const KonchatNotification = {
 		return $(`.link-room-${rid}`).removeClass('new-room-highlight');
 	},
 };
-
-Meteor.startup(() => {
-	Tracker.autorun(function () {
-		const user = Users.findOne(Meteor.userId(), {
-			fields: {
-				'settings.preferences.newRoomNotification': 1,
-				'settings.preferences.notificationsSoundVolume': 1,
-			},
-		});
-		const newRoomNotification = getUserPreference(user, 'newRoomNotification');
-		const audioVolume = getUserPreference(user, 'notificationsSoundVolume');
-
-		if ((Session.get('newRoomSound') || []).length > 0) {
-			Meteor.defer(function () {
-				if (newRoomNotification !== 'none') {
-					CustomSounds.play(newRoomNotification, {
-						volume: Number((audioVolume / 100).toPrecision(2)),
-					});
-				}
-			});
-		} else {
-			CustomSounds.pause(newRoomNotification);
-		}
-	});
-});
