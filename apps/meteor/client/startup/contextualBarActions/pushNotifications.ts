@@ -1,7 +1,7 @@
-import { lazy, useMemo } from 'react';
 import { useUserSubscription } from '@rocket.chat/ui-contexts';
+import { lazy, useMemo } from 'react';
 
-import { addAction } from '../../../client/views/room/lib/Toolbox';
+import { addAction } from '../../views/room/lib/Toolbox';
 
 addAction('push-notifications', ({ room }) => {
 	const subscription = useUserSubscription(room?._id);
@@ -14,7 +14,7 @@ addAction('push-notifications', ({ room }) => {
 						id: 'push-notifications',
 						title: 'Notifications_Preferences',
 						icon: 'bell',
-						template: lazy(() => import('../../../client/views/room/contextualBar/NotificationPreferences')),
+						template: lazy(() => import('../../views/room/contextualBar/NotificationPreferences')),
 						order: 8,
 				  }
 				: null,

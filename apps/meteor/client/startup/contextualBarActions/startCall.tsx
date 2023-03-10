@@ -1,39 +1,13 @@
-import { useMemo, lazy } from 'react';
+import { isRoomFederated } from '@rocket.chat/core-typings';
 import { useStableArray, useMutableCallback } from '@rocket.chat/fuselage-hooks';
 import { useSetting, useUser, useTranslation, usePermission } from '@rocket.chat/ui-contexts';
-import { isRoomFederated } from '@rocket.chat/core-typings';
+import { useMemo } from 'react';
 
-import { useVideoConfDispatchOutgoing, useVideoConfIsCalling, useVideoConfIsRinging } from '../../../client/contexts/VideoConfContext';
-import type { ToolboxActionConfig } from '../../../client/views/room/lib/Toolbox';
-import { addAction } from '../../../client/views/room/lib/Toolbox';
-import { VideoConfManager } from '../../../client/lib/VideoConfManager';
-import { useVideoConfWarning } from '../../../client/views/room/contextualBar/VideoConference/useVideoConfWarning';
-import { useHasLicenseModule } from '../../../ee/client/hooks/useHasLicenseModule';
-
-addAction('calls', ({ room }) => {
-	const t = useTranslation();
-	const hasLicense = useHasLicenseModule('videoconference-enterprise');
-	const federated = isRoomFederated(room);
-
-	return useMemo(
-		() =>
-			hasLicense
-				? {
-						groups: ['channel', 'group', 'team'],
-						id: 'calls',
-						icon: 'phone',
-						title: 'Calls',
-						...(federated && {
-							'data-tooltip': t('Video_Call_unavailable_for_this_type_of_room'),
-							'disabled': true,
-						}),
-						template: lazy(() => import('../../../client/views/room/contextualBar/VideoConference/VideoConfList')),
-						order: 999,
-				  }
-				: null,
-		[hasLicense, federated, t],
-	);
-});
+import { useVideoConfDispatchOutgoing, useVideoConfIsCalling, useVideoConfIsRinging } from '../../contexts/VideoConfContext';
+import { VideoConfManager } from '../../lib/VideoConfManager';
+import { useVideoConfWarning } from '../../views/room/contextualBar/VideoConference/useVideoConfWarning';
+import { addAction } from '../../views/room/lib/Toolbox';
+import type { ToolboxActionConfig } from '../../views/room/lib/Toolbox';
 
 addAction('start-call', ({ room }) => {
 	const t = useTranslation();

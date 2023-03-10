@@ -1,9 +1,9 @@
-import { useMemo, useCallback } from 'react';
-import { useSetting } from '@rocket.chat/ui-contexts';
 import { isRoomFederated } from '@rocket.chat/core-typings';
+import { useSetting } from '@rocket.chat/ui-contexts';
+import { useMemo, useCallback } from 'react';
 
-import { addAction } from '../../../client/views/room/lib/Toolbox';
-import { APIClient } from '../../utils/client';
+import { APIClient } from '../../../app/utils/client';
+import { addAction } from '../../views/room/lib/Toolbox';
 
 addAction('webRTCVideo', ({ room }) => {
 	const enabled = useSetting('WebRTC_Enabled') && useSetting('Omnichannel_call_provider') === 'WebRTC' && room.servedBy;

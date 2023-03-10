@@ -1,10 +1,10 @@
-import { useMemo, lazy } from 'react';
-import { useSetting } from '@rocket.chat/ui-contexts';
 import { isRoomFederated } from '@rocket.chat/core-typings';
+import { useSetting } from '@rocket.chat/ui-contexts';
+import { useMemo, lazy } from 'react';
 
-import { addAction } from '../../../client/views/room/lib/Toolbox';
+import { addAction } from '../../views/room/lib/Toolbox';
 
-const template = lazy(() => import('../../../client/views/room/contextualBar/Discussions'));
+const template = lazy(() => import('../../views/room/contextualBar/Discussions'));
 
 addAction('discussions', ({ room }) => {
 	const discussionEnabled = useSetting('Discussion_enabled');

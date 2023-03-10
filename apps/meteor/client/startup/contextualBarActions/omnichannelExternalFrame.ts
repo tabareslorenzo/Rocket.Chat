@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
 import { useSetting } from '@rocket.chat/ui-contexts';
+import { useMemo } from 'react';
 
-import { addAction } from '../../../../client/views/room/lib/Toolbox';
+import { addAction } from '../../views/room/lib/Toolbox';
 
 addAction('omnichannel-external-frame', () => {
 	const enabled = useSetting('Omnichannel_External_Frame_Enabled');

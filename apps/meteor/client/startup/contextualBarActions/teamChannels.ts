@@ -1,7 +1,7 @@
 import type { FC, LazyExoticComponent } from 'react';
 import { lazy } from 'react';
 
-import { addAction } from '../../../room/lib/Toolbox';
+import { addAction } from '../../views/room/lib/Toolbox';
 
 addAction('team-channels', {
 	groups: ['team'],
@@ -10,6 +10,6 @@ addAction('team-channels', {
 	full: true,
 	title: 'Team_Channels',
 	icon: 'hash',
-	template: lazy(() => import('./index')) as LazyExoticComponent<FC>,
+	template: lazy(() => import('../../views/teams/contextualBar/channels/index')) as LazyExoticComponent<FC>,
 	order: 2,
 });

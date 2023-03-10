@@ -1,7 +1,7 @@
-import { lazy, useMemo } from 'react';
 import { useSetting, usePermission } from '@rocket.chat/ui-contexts';
+import { lazy, useMemo } from 'react';
 
-import { addAction } from '../../../../client/views/room/lib/Toolbox';
+import { addAction } from '../../views/room/lib/Toolbox';
 
 addAction('autotranslate', () => {
 	const hasPermission = usePermission('auto-translate');
@@ -14,7 +14,7 @@ addAction('autotranslate', () => {
 						id: 'autotranslate',
 						title: 'Auto_Translate',
 						icon: 'language',
-						template: lazy(() => import('../../../../client/views/room/contextualBar/AutoTranslate')),
+						template: lazy(() => import('../../views/room/contextualBar/AutoTranslate')),
 						order: 20,
 						full: true,
 				  }

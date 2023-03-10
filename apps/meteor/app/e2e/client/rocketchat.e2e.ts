@@ -30,8 +30,6 @@ import {
 import * as banners from '../../../client/lib/banners';
 import type { LegacyBannerPayload } from '../../../client/lib/banners';
 import { Rooms, Subscriptions, Messages } from '../../models/client';
-import './events.js';
-import './tabbar';
 import { log, logError } from './logger';
 import { waitUntilFind } from '../../../client/lib/utils/waitUntilFind';
 import { imperativeModal } from '../../../client/lib/imperativeModal';
@@ -41,6 +39,7 @@ import { call } from '../../../client/lib/utils/call';
 import { APIClient } from '../../utils/client';
 import { createQuoteAttachment } from '../../../lib/createQuoteAttachment';
 import { mapMessageFromApi } from '../../../client/lib/utils/mapMessageFromApi';
+import './events.js';
 
 let failedToDecodeKey = false;
 
