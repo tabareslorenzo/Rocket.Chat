@@ -1,47 +1,39 @@
-import { Meteor } from 'meteor/meteor';
-import _ from 'underscore';
+import { settings } from '../../settings';
 
-let settings;
-if (Meteor.isClient) {
-	settings = require('../../settings/client').settings;
-} else {
-	settings = require('../../settings/server').settings;
-}
-
-export const fileUploadMediaWhiteList = function (customWhiteList) {
+export const fileUploadMediaWhiteList = (customWhiteList) => {
 	const mediaTypeWhiteList = customWhiteList || settings.get('FileUpload_MediaTypeWhiteList');
 
 	if (!mediaTypeWhiteList || mediaTypeWhiteList === '*') {
 		return;
 	}
-	return _.map(mediaTypeWhiteList.split(','), function (item) {
+	return mediaTypeWhiteList.split(',').map((item) => {
 		return item.trim();
 	});
 };
 
-const fileUploadMediaBlackList = function () {
+const fileUploadMediaBlackList = () => {
 	const blacklist = settings.get('FileUpload_MediaTypeBlackList');
 	if (!blacklist) {
 		return;
 	}
 
-	return _.map(blacklist.split(','), (item) => item.trim());
+	return blacklist.split(',').map((item) => item.trim());
 };
 
-const isTypeOnList = function (type, list) {
-	if (_.contains(list, type)) {
+const isTypeOnList = (type, list) => {
+	if (list.includes(type)) {
 		return true;
 	}
 	const wildCardGlob = '/*';
-	const wildcards = _.filter(list, function (item) {
+	const wildcards = list.filter(function (item) {
 		return item.indexOf(wildCardGlob) > 0;
 	});
-	if (_.contains(wildcards, type.replace(/(\/.*)$/, wildCardGlob))) {
+	if (wildcards.includes(type.replace(/(\/.*)$/, wildCardGlob))) {
 		return true;
 	}
 };
 
-export const fileUploadIsValidContentType = function (type, customWhiteList) {
+export const fileUploadIsValidContentType = (type, customWhiteList) => {
 	const blackList = fileUploadMediaBlackList();
 	const whiteList = fileUploadMediaWhiteList(customWhiteList);
 

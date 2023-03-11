@@ -1,12 +1,9 @@
 import emojione from 'emojione';
-import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import mem from 'mem';
 
 import { emojioneRender, emojioneRenderFromShort } from './emojioneRender';
 import { emojisByCategory, emojiCategories, toneList } from './emojiPicker';
 import { emoji } from '../../emoji';
-import { getUserPreference } from '../../utils';
 
 // TODO remove fix below when issue is solved: https://github.com/joypixels/emojione/issues/617
 
@@ -270,7 +267,7 @@ emoji.packages.emojione.render = emojioneRender;
 emoji.packages.emojione.renderPicker = emojioneRenderFromShort;
 
 // http://stackoverflow.com/a/26990347 function isSet() from Gajus
-function isSetNotNull(fn) {
+export function isSetNotNull(fn) {
 	let value;
 	try {
 		value = fn();
@@ -294,16 +291,3 @@ for (const key in emojione.emojioneList) {
 		}
 	}
 }
-
-// Additional settings -- ascii emojis
-Meteor.startup(function () {
-	Tracker.autorun(function () {
-		if (isSetNotNull(() => emoji.packages.emojione)) {
-			if (isSetNotNull(() => getUserPreference(Meteor.userId(), 'convertAsciiEmoji'))) {
-				emoji.packages.emojione.ascii = getUserPreference(Meteor.userId(), 'convertAsciiEmoji');
-			} else {
-				emoji.packages.emojione.ascii = true;
-			}
-		}
-	});
-});

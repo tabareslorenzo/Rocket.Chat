@@ -19,7 +19,6 @@ settingsRegistry.addGroup('OAuth', function () {
 		this.add('Accounts_OAuth_Tokenpass_callback_url', '_oauth/tokenpass', {
 			type: 'relativeUrl',
 			readonly: true,
-			force: true,
 			enableQuery,
 		});
 	});

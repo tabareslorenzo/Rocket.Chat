@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 
 import { settings } from '../../settings/server';
-import { config, Drupal } from '../lib/common';
+import { config, Tokenpass } from '../lib/common';
 
 Meteor.startup(() => {
-	settings.watch<string>('API_Drupal_URL', (value) => {
+	settings.watch('API_Tokenpass_URL', (value: string) => {
 		config.serverURL = value;
-		Drupal.configure(config);
+		Tokenpass.configure(config);
 	});
 });

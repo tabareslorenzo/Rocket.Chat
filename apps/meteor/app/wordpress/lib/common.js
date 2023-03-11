@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import { ServiceConfiguration } from 'meteor/service-configuration';
 import _ from 'underscore';
 
@@ -19,7 +18,7 @@ const config = {
 
 const WordPress = new CustomOAuth('wordpress', config);
 
-const fillSettings = _.debounce(
+export const fillSettings = _.debounce(
 	Meteor.bindEnvironment(() => {
 		config.serverURL = settings.get('API_Wordpress_URL');
 		if (!config.serverURL) {
@@ -93,15 +92,3 @@ const fillSettings = _.debounce(
 	}),
 	Meteor.isServer ? 1000 : 100,
 );
-
-if (Meteor.isServer) {
-	Meteor.startup(function () {
-		return settings.watchByRegex(/(API\_Wordpress\_URL)?(Accounts\_OAuth\_Wordpress\_)?/, () => fillSettings());
-	});
-} else {
-	Meteor.startup(function () {
-		return Tracker.autorun(function () {
-			return fillSettings();
-		});
-	});
-}

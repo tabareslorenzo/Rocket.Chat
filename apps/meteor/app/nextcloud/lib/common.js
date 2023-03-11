@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import _ from 'underscore';
 
 import { settings } from '../../settings';
@@ -20,7 +19,7 @@ const config = {
 
 const Nextcloud = new CustomOAuth('nextcloud', config);
 
-const fillServerURL = _.debounce(
+export const fillServerURL = _.debounce(
 	Meteor.bindEnvironment(() => {
 		const nextcloudURL = settings.get('Accounts_OAuth_Nextcloud_URL');
 		if (!nextcloudURL) {
@@ -34,13 +33,3 @@ const fillServerURL = _.debounce(
 	}),
 	Meteor.isServer ? 1000 : 100,
 );
-
-Meteor.startup(function () {
-	if (Meteor.isServer) {
-		settings.watch('Accounts_OAuth_Nextcloud_URL', () => fillServerURL());
-	} else {
-		Tracker.autorun(function () {
-			return fillServerURL();
-		});
-	}
-});
